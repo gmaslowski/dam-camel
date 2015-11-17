@@ -15,12 +15,12 @@ import java.io.InputStream;
 import java.net.URL;
 
 @Component
-public class ContentTransferJobToInputStreamTypeConverter implements TypeConverters {
+public class ContentTransferJobToInputStream implements TypeConverters {
 
-    private static final Logger log = LoggerFactory.getLogger(ContentTransferJobToInputStreamTypeConverter.class);
+    private static final Logger log = LoggerFactory.getLogger(ContentTransferJobToInputStream.class);
 
     @Autowired
-    public ContentTransferJobToInputStreamTypeConverter(CamelContext camelContext) {
+    public ContentTransferJobToInputStream(CamelContext camelContext) {
         camelContext.getTypeConverterRegistry().addTypeConverters(this);
     }
 

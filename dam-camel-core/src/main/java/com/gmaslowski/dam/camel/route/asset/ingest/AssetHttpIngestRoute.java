@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static com.gmaslowski.dam.camel.route.asset.ingest.AssetIngestContentTransferRoute.DIRECT_TRANSFER_CONTENT;
+import static com.gmaslowski.dam.camel.route.asset.ingest.AssetIngestContentTransferRoute.directTransferContent;
 import static com.gmaslowski.dam.camel.route.asset.ingest.AssetIngestProcessors.RemoveIdAndRevFromHeaders;
 import static com.gmaslowski.dam.camel.route.asset.ingest.AssetIngestProcessors.SetIdAndRevisionInAsset;
 import static com.gmaslowski.dam.camel.route.asset.ingest.AssetIngestTransformations.AssetDtoToAsset;
@@ -38,16 +38,17 @@ public class AssetHttpIngestRoute extends SpringRouteBuilder {
                 .routeId("AssetHttpIngest")
                 .unmarshal().json(Gson, AssetDto.class)
                 .bean(AssetDtoToAsset, "map")
-                .routeId("AssetCouchdbPersist")
-                .marshal().json(Gson)
-                .convertBodyTo(String.class)
+
+                .marshal().json(Gson).convertBodyTo(String.class)
                 .to("couchdb:" + couchDbConfiguration.assetsDatabase())
                 .unmarshal().json(Gson, Asset.class)
+
                 .process(SetIdAndRevisionInAsset)
                 .process(RemoveIdAndRevFromHeaders)
-                .wireTap(DIRECT_TRANSFER_CONTENT)
+
+                .wireTap(directTransferContent)
+
                 .bean(AssetToAssetDto, "map")
-                .marshal().json(Gson)
-                .convertBodyTo(String.class);
+                .marshal().json(Gson).convertBodyTo(String.class);
     }
 }

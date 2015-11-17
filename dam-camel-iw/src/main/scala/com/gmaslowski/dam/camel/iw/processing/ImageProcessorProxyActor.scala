@@ -18,6 +18,7 @@ object ImageProcessorProxyActor {
 }
 
 class ImageProcessorProxyActor(imageProcessor: ActorRef) extends Consumer with ActorLogging {
+
   def endpointUri = "file:/tmp/dam-camel-storage/?recursive=true&noop=true&exclude=.*flavor.*"
 
   override def receive = {

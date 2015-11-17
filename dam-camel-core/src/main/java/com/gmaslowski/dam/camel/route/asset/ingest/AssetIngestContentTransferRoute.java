@@ -13,11 +13,11 @@ import static org.apache.camel.ExchangePattern.InOnly;
 @Component
 public class AssetIngestContentTransferRoute extends SpringRouteBuilder {
 
-    public static final String DIRECT_TRANSFER_CONTENT = "direct:transferContent";
+    public static final String directTransferContent = "direct:transferContent";
 
     @Override
     public void configure() throws Exception {
-        from(DIRECT_TRANSFER_CONTENT)
+        from(directTransferContent)
                 .routeId("TransferAssetContent")
                 .choice()
                 .when(AssetIngestedWithContent)

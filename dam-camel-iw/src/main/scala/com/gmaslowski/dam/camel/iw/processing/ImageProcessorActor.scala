@@ -3,7 +3,6 @@ package com.gmaslowski.dam.camel.iw.processing
 import akka.actor.{Actor, ActorLogging, Stash, Terminated, _}
 import akka.pattern.pipe
 import com.gmaslowski.dam.camel.iw.processing.ImageProcessorActor.{StartTranscoding, _}
-import org.apache.camel.Consumer
 import org.im4java.core.{ConvertCmd, IMOperation}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -17,14 +16,14 @@ object ImageProcessorActor {
 
   case object ProcessingFinished
 
-  def createOperation(sourceImage: String, targetImage: String): IMOperation = {
+  def createIMagickOperation(sourceImage: String, targetImage: String): IMOperation = {
     val op: IMOperation = new IMOperation
     op.addImage(sourceImage)
     op.addImage(targetImage)
     op
   }
 
-  def runOperation(op: IMOperation) = {
+  def runIMagickOperation(op: IMOperation) = {
     val cmd: ConvertCmd = new ConvertCmd()
     cmd.run(op)
   }
@@ -43,25 +42,23 @@ class ImageProcessorActor extends Actor with ActorLogging with Stash {
         implicit val ec: ExecutionContext = context.dispatcher
 
         Future {
-          val operation = ImageProcessorActor.createOperation(fileUrl, outputFileUrl)
-          runOperation(operation)
+          val operation = ImageProcessorActor.createIMagickOperation(fileUrl, outputFileUrl)
+          runIMagickOperation(operation)
           ProcessingFinished
         }(ec).pipeTo(self)
 
         override def receive: Actor.Receive = {
           case ProcessingFinished =>
 
-            // fixme: params
-            // receiver ! SendCallback(callbackUrl = callbackUrl, requestId = requestId, OK)
             context.stop(self)
             log.info(s"Request $requestId processed successfully (output: $outputFileUrl).")
 
           case Failure(fail) =>
-            // receiver ! SendCallback(callbackUrl = callbackUrl, requestId = requestId, NOK)
             context.stop(self)
             log.warning(s"Processing request $requestId failed {}.", fail)
         }
       }))
+
       context.watch(child)
       context.become(processing, true)
   }
