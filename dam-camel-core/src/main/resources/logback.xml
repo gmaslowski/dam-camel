@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+    <property name="CONSOLE_LOG_PATTERN"
+              value="[%d{HH:mm:ss.SSS}] %highlight(%-5level) [%thread] %logger{36} - %msg%n"/>
+    <property name="FILE_LOG_PATTERN" value="[%d{HH:mm:ss.SSS}] %-5level [%thread] %logger{36} - %msg%n"/>
+    <property name="LOGS_DIRECTORY" value="logs"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_DIRECTORY}/planningPoker.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_DIRECTORY}/planningPoker-%d{yyyy-MM-dd-HH}-%i.log
+            </fileNamePattern>
+            <maxHistory>100</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <logger name="org.springframework" level="INFO"/>
+
+</configuration>

@@ -1,0 +1,13 @@
+subprojects {
+    apply plugin: 'java'
+
+    group = 'com.gmaslowski.dam'
+    version = '1.0-SNAPSHOT'
+
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    repositories {
+        mavenCentral()
+    }
+}

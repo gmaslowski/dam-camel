@@ -1,0 +1,7 @@
+rootProject.name = 'dam-camel'
+
+include 'dam-camel-api'
+include 'dam-camel-internal-api'
+include 'dam-camel-core'
+include 'dam-camel-iw'
+include 'dam-camel-tw'

@@ -1,0 +1,15 @@
+.idea
+target/
+.gradle
+gradle
+*.iml
+build/
+node_modules/
+bower_components/
+dist/
+*.log
+out/
+.checkstyle
+.classpath
+.project
+classes/
