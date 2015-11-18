@@ -34,11 +34,9 @@ object ImageProcessorActor {
     case _ => "unknown"
   }
 }
-
 class ImageProcessorActor extends Consumer with ActorLogging with Stash {
 
-  def endpointUri = "file:/tmp/dam-camel-storage/?recursive=true&noop=true&exclude=.*flavor.*"
-
+  override def endpointUri = "file:/tmp/dam-camel-storage/?recursive=true&noop=true&exclude=.*flavor.*"
   override def receive: Receive = canProcess
 
   def canProcess: Receive = {
@@ -58,7 +56,7 @@ class ImageProcessorActor extends Consumer with ActorLogging with Stash {
           val operation = ImageProcessorActor.createIMagickOperation(fileUrl, outputFileUrl)
           runIMagickOperation(operation)
           ProcessingFinished
-        }(ec).pipeTo(self)
+        }.pipeTo(self)
 
         override def receive: Actor.Receive = {
           case ProcessingFinished =>
