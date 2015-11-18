@@ -2,8 +2,7 @@ package com.gmaslowski.dam.camel.iw
 
 import akka.actor.{ActorRef, ActorSystem}
 import akka.camel.CamelExtension
-import akka.routing.RoundRobinPool
-import com.gmaslowski.dam.camel.iw.processing.{ImageProcessorActor, ImageProcessorProxyActor}
+import com.gmaslowski.dam.camel.iw.processing.ImageProcessorActor
 import org.apache.camel.CamelContext
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -25,11 +24,6 @@ class ImageWorkerConfiguration {
   @Bean
   def imageProcessorActor(actorSystem: ActorSystem): ActorRef = {
     actorSystem.actorOf(ImageProcessorActor.props)
-  }
-
-  @Bean
-  def imageProcessorProxyActor(actorSystem: ActorSystem, imageProcessorActor: ActorRef): ActorRef = {
-    actorSystem.actorOf(RoundRobinPool(5).props(ImageProcessorProxyActor.props(imageProcessorActor)))
   }
 }
 

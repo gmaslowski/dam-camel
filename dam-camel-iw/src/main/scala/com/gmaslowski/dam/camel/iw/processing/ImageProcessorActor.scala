@@ -1,8 +1,9 @@
 package com.gmaslowski.dam.camel.iw.processing
 
 import akka.actor.{Actor, ActorLogging, Stash, Terminated, _}
+import akka.camel.{Consumer, CamelMessage}
 import akka.pattern.pipe
-import com.gmaslowski.dam.camel.iw.processing.ImageProcessorActor.{StartTranscoding, _}
+import com.gmaslowski.dam.camel.iw.processing.ImageProcessorActor._
 import org.im4java.core.{ConvertCmd, IMOperation}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -11,8 +12,6 @@ import scala.util.Failure
 object ImageProcessorActor {
 
   def props = Props(classOf[ImageProcessorActor])
-
-  case class StartTranscoding(requestId: String, fileUrl: String, outputFileUrl: String)
 
   case object ProcessingFinished
 
@@ -28,14 +27,28 @@ object ImageProcessorActor {
     cmd.run(op)
   }
 
+  def resolveExtension(contentType: String): String = contentType match {
+    case "image/jpg" => "jpg"
+    case "image/jpeg" => "jpg"
+    case "image/png" => "png"
+    case _ => "unknown"
+  }
 }
 
-class ImageProcessorActor extends Actor with ActorLogging with Stash {
+class ImageProcessorActor extends Consumer with ActorLogging with Stash {
+
+  def endpointUri = "file:/tmp/dam-camel-storage/?recursive=true&noop=true&exclude=.*flavor.*"
 
   override def receive: Receive = canProcess
 
   def canProcess: Receive = {
-    case StartTranscoding(requestId, fileUrl, outputFileUrl) =>
+
+    case msg: CamelMessage =>
+      val requestId = msg.getHeaderAs("MessageExchangeId", classOf[String], camelContext)
+      val fileUrl = msg.getHeaderAs("CamelFilePath", classOf[String], camelContext)
+      val contentType = msg.getHeaderAs("CamelFileContentType", classOf[String], camelContext)
+      val outputFileUrl = s"""${msg.getHeaderAs("CamelFileParent", classOf[String], camelContext)}/flavor.${resolveExtension(contentType)}"""
+
       log.info(s"Processing request $requestId (input: $fileUrl).")
 
       val child = context.actorOf(Props(new Actor {
@@ -64,7 +77,7 @@ class ImageProcessorActor extends Actor with ActorLogging with Stash {
   }
 
   def processing: Receive = {
-    case StartTranscoding(requestId, fileUrl, outputFileUrl) =>
+    case msg: CamelMessage =>
       stash()
     case msg: Terminated => {
       unstashAll()
