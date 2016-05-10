@@ -16,10 +16,19 @@ apply plugin: 'spring-boot'
 dependencies {
     compile project(':dam-camel-internal-api')
 
+    // spring
     compile('org.springframework.boot:spring-boot-starter')
+
+    // camel
     compile('org.apache.camel:camel-spring-boot:2.17.1')
     compile('org.apache.camel:camel-core:2.17.1')
     compile('org.apache.camel:camel-jms:2.17.1')
     compile('org.apache.camel:camel-gson:2.17.1')
+
+    // activemq
     compile('org.apache.activemq:activemq-core:5.7.0')
+
+    // logging
+    compile('org.slf4j:slf4j-api:1.7.21')
+    compile('ch.qos.logback:logback-classic:1.1.3')
 }
