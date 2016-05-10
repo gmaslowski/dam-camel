@@ -5,8 +5,6 @@ import com.gmaslowski.dam.camel.dto.AssetDto;
 import com.gmaslowski.dam.camel.infrastructure.couchdb.CouchDbConfiguration;
 import com.gmaslowski.dam.camel.infrastructure.jetty.JettyConfiguration;
 import org.apache.camel.spring.SpringRouteBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +17,6 @@ import static org.apache.camel.model.dataformat.JsonLibrary.Gson;
 
 @Component
 public class AssetHttpIngestRoute extends SpringRouteBuilder {
-
-    private static final Logger log = LoggerFactory.getLogger(AssetHttpIngestRoute.class);
 
     private final JettyConfiguration jettyConfiguration;
     private final CouchDbConfiguration couchDbConfiguration;

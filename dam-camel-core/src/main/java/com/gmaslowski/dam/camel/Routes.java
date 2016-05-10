@@ -5,6 +5,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackages = "com.gmaslowski.dam.camel.route")
-public class Routes {
+class Routes {
 
 }

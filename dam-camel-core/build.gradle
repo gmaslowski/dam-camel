@@ -17,7 +17,10 @@ dependencies {
     compile project(':dam-camel-api')
     compile project(':dam-camel-internal-api')
 
+    // spring
     compile('org.springframework.boot:spring-boot-starter')
+    
+    // camel
     compile('org.apache.camel:camel-spring-boot:2.17.1')
     compile('org.apache.camel:camel-spring:2.17.1')
     compile('org.apache.camel:camel-core:2.17.1')
@@ -25,5 +28,7 @@ dependencies {
     compile('org.apache.camel:camel-jetty:2.17.1')
     compile('org.apache.camel:camel-couchdb:2.17.1')
     compile('org.apache.camel:camel-jms:2.17.1')
+
+    // activemq
     compile('org.apache.activemq:activemq-core:5.7.0')
 }
