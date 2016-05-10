@@ -27,8 +27,4 @@ dependencies {
 
     // activemq
     compile('org.apache.activemq:activemq-core:5.7.0')
-
-    // logging
-    compile('org.slf4j:slf4j-api:1.7.21')
-    compile('ch.qos.logback:logback-classic:1.1.3')
 }

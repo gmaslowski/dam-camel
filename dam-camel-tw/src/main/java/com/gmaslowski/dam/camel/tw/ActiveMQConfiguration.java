@@ -18,9 +18,15 @@ public class ActiveMQConfiguration {
     @Value("${activemq.port}")
     private String activeMQPort;
 
+    @Value("${activemq.user}")
+    private String activeMQUser;
+
+    @Value("${activemq.password}")
+    private String activeMQPassword;
+
     @Bean
     ActiveMQConnectionFactory activeMQConnectionFactory() {
-        return new ActiveMQConnectionFactory("tcp://" + activeMQAddress + ":" + activeMQPort);
+        return new ActiveMQConnectionFactory(activeMQUser, activeMQPassword, "tcp://" + activeMQAddress + ":" + activeMQPort);
     }
 
     @Bean

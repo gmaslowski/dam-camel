@@ -2,16 +2,12 @@ package com.gmaslowski.dam.camel.tw.route;
 
 import com.gmaslowski.dam.camel.job.ContentTransferJob;
 import org.apache.camel.spring.SpringRouteBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import static com.gmaslowski.dam.camel.job.JobQueues.TransferContentQueue;
 
 @Component
 public class TransferContentRoute extends SpringRouteBuilder {
-
-    private static final Logger log = LoggerFactory.getLogger(TransferContentRoute.class);
 
     @Override
     public void configure() throws Exception {
