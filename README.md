@@ -9,6 +9,7 @@ A sample playground on distributed DAM system leveraging all of the current good
 - [Gradle](http://gradle.org/)
 
 ### Playground architecture
+TBD!
 
 ### Setting up development infrastructure
 ```
