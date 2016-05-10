@@ -21,12 +21,12 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter')
 
     // camel
-    compile('org.apache.camel:camel-spring-boot:2.17.1')
-    compile('org.apache.camel:camel-spring:2.17.1')
-    compile('org.apache.camel:camel-core:2.17.1')
-    compile('org.apache.camel:camel-jms:2.17.1')
-    compile('org.apache.camel:camel-gson:2.17.1')
-    compile('org.apache.camel:camel-scala:2.17.1')
+    compile('org.apache.camel:camel-spring-boot:2.16.0')
+    compile('org.apache.camel:camel-spring:2.16.0')
+    compile('org.apache.camel:camel-core:2.16.0')
+    compile('org.apache.camel:camel-jms:2.16.0')
+    compile('org.apache.camel:camel-gson:2.16.0')
+    compile('org.apache.camel:camel-scala:2.16.0')
 
     // activemq
     compile('org.apache.activemq:activemq-core:5.7.0')
