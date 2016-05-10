@@ -1,0 +1,17 @@
+couchdb:
+  container_name: couchdb
+  image: couchdb
+  expose:
+    - "5984"
+  ports:
+   - "5984:5984"
+
+activemq:
+  container_name: activemq
+  image: webcenter/activemq
+  environment:
+    ACTIVEMQ_STATIC_QUEUES: transferContent
+  expose:
+   - "61616"
+  ports:
+   - "61616:61616"
