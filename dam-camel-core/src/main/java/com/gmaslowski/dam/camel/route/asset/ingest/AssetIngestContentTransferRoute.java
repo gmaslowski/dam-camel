@@ -21,12 +21,12 @@ public class AssetIngestContentTransferRoute extends SpringRouteBuilder {
                 .routeId("TransferAssetContent")
                 .choice()
                 .when(AssetIngestedWithContent)
-                .bean(AssetToInternalAssetDto, "map")
-                .process(exchange -> {
-                    InternalAssetDto internalAssetDto = exchange.getIn().getBody(InternalAssetDto.class);
-                    exchange.getIn().setBody(new ContentTransferJob(internalAssetDto));
-                })
-                .to(InOnly, "activemq:queue:" + TransferContentQueue + "?jmsMessageType=Object")
+                    .bean(AssetToInternalAssetDto, "map")
+                    .process(exchange -> {
+                        InternalAssetDto internalAssetDto = exchange.getIn().getBody(InternalAssetDto.class);
+                        exchange.getIn().setBody(new ContentTransferJob(internalAssetDto));
+                    })
+                    .to(InOnly, "activemq:queue:" + TransferContentQueue + "?jmsMessageType=Object")
                 .end();
     }
 }

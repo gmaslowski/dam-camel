@@ -21,7 +21,5 @@ public class TransferContentRoute extends SpringRouteBuilder {
                     exchange.getIn().setHeader("CamelFileName", ctj.getAssetDto().getId() + "/original.jpg");
                 })
                 .to("file:/tmp/dam-camel-storage/?autoCreate=true");
-
-
     }
 }

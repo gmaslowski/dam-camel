@@ -40,7 +40,7 @@ public class AssetHttpIngestRoute extends SpringRouteBuilder {
                 .bean(AssetDtoToAsset, "map")
 
                 .marshal().json(Gson).convertBodyTo(String.class)
-                .to("couchdb:" + couchDbConfiguration.assetsDatabase())
+                .to("couchdb:" + couchDbConfiguration.assetsDatabase() + "?createDatabase=true")
                 .unmarshal().json(Gson, Asset.class)
 
                 .process(SetIdAndRevisionInAsset)
